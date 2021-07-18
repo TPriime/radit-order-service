@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+// Describes the requested product
+message ProductKey {
+    string productId = 1;
+    string productName = 2;
+}
+
+// Describes the product with the added 
+// price as response
+message Product {
+    string productId = 1;
+    string productName = 2;
+    int32 productCount = 3;
+    int32 productPrice = 4;
+}
+
+message SearchResponse {
+    bool status = 1;
+    Product product = 2;
+}
+
+service ProductService {
+    rpc GetProductById (ProductKey) returns (SearchResponse) {}
+    rpc GetProductByName (ProductKey) returns (SearchResponse) {}
+}
