@@ -29,31 +29,6 @@ describe('orders', () => {
                 });
         });
     });
-    describe('/PUT order', () => {
-        it('it should PUT an order ', (done) => {
-            let order = {
-                customerId: "c220a2db2",
-                amount: 2000,
-                productIds: [
-                      "60f30453e120d253911cf215",
-                      "60f30453e120d253911cf215"
-                    ]
-              }
-            chai.request(server)
-                .put('/')
-                .send(order)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Created order');
-                    res.body.should.have.property('order');
-                    res.body.order.should.have.property('_id');
-                    res.body.order.should.have.property('customerId').eql(order.customerId);
-                    res.body.order.should.have.property('productIds');
-                    done();
-                });
-        });
-    });
     describe('/GET/:orderId order', () => {
         it('it should GET an order by the given order id', (done) => {
             let order = new Order({
@@ -80,4 +55,33 @@ describe('orders', () => {
 
         });
     });
+
+    // test only works with radit-product-service running
+
+    // describe('/PUT order', () => {
+    //     it('it should PUT an order ', (done) => {
+    //         let order = {
+    //             customerId: "c220a2db2",
+    //             amount: 2000,
+    //             productIds: [
+    //                   "60f30453e120d253911cf215",
+    //                   "60f30453e120d253911cf215"
+    //                 ]
+    //           }
+    //         chai.request(server)
+    //             .put('/')
+    //             .send(order)
+    //             .end((err, res) => {
+    //                 res.should.have.status(200);
+    //                 res.body.should.be.a('object');
+    //                 res.body.should.have.property('message').eql('Created order');
+    //                 res.body.should.have.property('order');
+    //                 res.body.order.should.have.property('_id');
+    //                 res.body.order.should.have.property('customerId').eql(order.customerId);
+    //                 res.body.order.should.have.property('productIds');
+    //                 done();
+    //             });
+    //     });
+    // });
+    
 });

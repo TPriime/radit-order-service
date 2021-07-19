@@ -21,8 +21,12 @@ module.exports.validateOrder = async (req, res, next) => {
 
     // check for non existing product id
     for(productId in req.body.productIds) {
-        const available = (await productClient.getProductById(productId)).status;
-        if(!available) return _sendError(Errors.PRODUCT_NOT_EXISTS, error, res);
+        try {
+          const available = (await productClient.getProductById(productId)).status;
+          if(!available) return _sendError(Errors.PRODUCT_NOT_EXISTS, error, res);
+        } catch (err) {
+          _sendError(Errors.INTERNAL_SERVER_ERROR, err, res);
+        }
     }
     next();
 };
