@@ -21,9 +21,9 @@ module.exports.validateOrder = async (req, res, next) => {
 
   // check for non existing product id
   try {
-    for (productId in req.body.productIds) {
-      // const available = (await productClient.getProductById(productId)).status; TODO: fix rpc connection
-      // if (!available) return _sendError(Errors.PRODUCT_NOT_EXISTS, error, res);
+    for (productId of req.body.productIds) {
+      const available = (await productClient.getProductById(productId)).status;
+      if (!available) return _sendError(Errors.PRODUCT_NOT_EXISTS, error, res);
     }
   } catch (err) {
     console.log(`error connecting to client: ${err}`);
